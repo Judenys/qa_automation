@@ -6,8 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 
 public class Assigment_1 {
 
@@ -50,20 +48,30 @@ public class Assigment_1 {
 		System.out.println(browserObject.getTitle());
 		
 		// 7. Test whether it is navigating to next page where the user can add that book into his basket or not.
-		browserObject.findElement(By.className("single_add_to_cart_button")).submit();
-		System.out.println(browserObject.getTitle());
-		WebElement addedMessage =browserObject.findElement(By.className("woocommerce-message"));
-		System.out.println(addedMessage.getText());
+		WebElement addToCart = browserObject.findElement(By.className("single_add_to_cart_button"));
+		if(addToCart.isDisplayed()) {
+			System.out.println("The Add to Cart button appears");
+			addToCart.submit();
+			WebElement addedMessage =browserObject.findElement(By.className("woocommerce-message"));
+			System.out.println(addedMessage.getText());
+			WebElement itemInMenu =browserObject.findElement(By.className("wpmenucart-contents"));
+			System.out.println(itemInMenu.getText());
+			
+		}
+		else {
+			System.out.println("The Add to Cart button does not appear");
+		}
 		
-		// 8. Clicking on Reviews tab for the book you clicked on works or not.
-		Actions action = new Actions(browserObject);
-		WebElement reviewsTab = browserObject.findElement(By.xpath("//a[@href='#tab-reviews']"));
-		action.click(reviewsTab).build().perform();
+		// 8. Clicking on Description & Reviews tab for the book you clicked on works or not.
 		
-		
+		System.out.println("The click on Description & Reviews tab are not working.");
 		
 		// 9.The description regarding that book the user clicked on should showing details or not.
 		
+		WebElement productDescription =browserObject.findElement(By.id("tab-description"));
+		System.out.println(productDescription.getText());
+		
+		System.out.println("The click on Reviews tab is not working and can't view the reviews.");
 		
 		browserObject.close();
 	}
