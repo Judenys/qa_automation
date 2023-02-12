@@ -69,24 +69,27 @@ public class Assignment_2 {
 		   // 10. Click on Place Order button
 		 	browserObject.findElement(By.id("learn-press-checkout-place-order")).click();
 		   // 11. Enter the card number 
-//		 	WebElement creditcardField;
-//		 	creditcardField = waitElement2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='cardnumber']"))); 
+		 	Thread.sleep(3000);
+		 	browserObject.switchTo().frame(0);
+		 	WebElement creditcardField;
+		 	creditcardField = waitElement2.until(ExpectedConditions.visibilityOfElementLocated(By.id("card-element")));
+		 	WebElement creditcardInput = browserObject.findElement(By.name("cardnumber"));
+		 	Actions action = new Actions(browserObject);
+		 	action.sendKeys(creditcardInput, "6011111111111117");
 //
-//		 	Actions action = new Actions(browserObject);
 //			action.moveToElement(creditcardField);
 //			action.sendKeys(creditcardField, "6011111111111117");
 			
 			
-		 	WebElement creditcardField;
-		 	creditcardField = waitElement2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='cardnumber']"))); 
-		 	creditcardField.clear();
-		 	creditcardField.sendKeys("6011 1111 1111 1117");
+//		 	WebElement creditcardField;
+//		 	creditcardField = waitElement2.until(ExpectedConditions.visibilityOfElementLocated(By.className("InputElement")));
+//		 	creditcardField.sendKeys("6011111111111117");
 		  // 12. Enter the expiration date 
 		 	browserObject.findElement(By.className("//span[@class='CardField-expiry']")).sendKeys("0827");
 		  // 13. Enter the CVC
 		 	browserObject.findElement(By.xpath("//span[@class='CardField-cvc']")).sendKeys("222");
 		  // 14. Click on Pay Now button
-		 	browserObject.findElement(By.id("payment-button")).click();
+		// 	browserObject.findElement(By.id("payment-button")).click();
 
 	 
 	 } 
