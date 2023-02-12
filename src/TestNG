@@ -1,0 +1,104 @@
+package testNGPackage;
+
+import static org.testng.Assert.assertEquals;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Assignment_2 {
+	WebDriver browserObject;
+	 @Test (priority = 1)
+	    public void verifyLogin() throws InterruptedException {
+		 WebDriverWait waitElement1=new WebDriverWait(browserObject, 10);
+		 System.out.println("Test Case 1 - Verify Login");
+		   // 1. Open the URL of http://demo.itlearn360.com/
+	        browserObject .get("http://demo.itlearn360.com/");
+		   // 2. Click on Login button.
+	        browserObject.findElement(By.linkText("Log in")).click();        
+	       // 3. Enter the Username & Password
+	        WebElement userName;
+	        WebElement password;
+	        userName = waitElement1.until(ExpectedConditions.visibilityOfElementLocated(By.id( "user_login")));
+	        password = waitElement1.until(ExpectedConditions.visibilityOfElementLocated(By.id( "user_pass")));
+	        userName.sendKeys("Demo12");
+	        password.sendKeys("Test123456$");
+		   // 4. Click on Submit button.
+	        browserObject.findElement(By.id("wp-submit")).click();
+	    }
+	 @Test (priority = 2)
+	    public void searchCourses() throws InterruptedException {
+		 	System.out.println("Test Case 2 - Search Courses");
+		   // 5. In homepage go to search box and search courses
+		 	browserObject.findElement(By.id("search_course")).sendKeys("Interview QA");
+		   // 6. Click on search icon and search the course
+	        browserObject.findElement(By.xpath("//*[@id=\"primary_menu\"]/nav[1]/form/button")).click();
+	    } 
+	 @Test (priority = 3)
+	    public void dashboardPage () throws InterruptedException {
+		 	System.out.println("Test Case 3 - Dashboard page");
+		   // 5. Click on Dashboard button
+		 	browserObject.findElement(By.className("lg_button")).click();
+		   // 6. Check if directed to Dashboard page or not.
+		 	String expectedTitle = "User Profile | ITlearn360";
+		    String actualTitle = browserObject.getTitle();
+		    assertEquals(actualTitle, expectedTitle);
+	    } 
+	 @Test (priority = 4)
+	    public void offeredAcademices () throws InterruptedException {
+		 	System.out.println("Test Case 4 - Offered Academices");
+		   // 7. Click on Offered Academices
+		 	browserObject.findElement(By.linkText("Offered Academies")).click();
+		   // 8. Click on Subscribe now button of any course. 
+		 	browserObject.findElement(By.xpath("//*[@id=\"tab-academies\"]/div/div/ul/li[4]/form/div/button")).click();
+	    } 
+	 @Test (priority = 5)
+	    public void payment  () throws InterruptedException {
+		 WebDriverWait waitElement2=new WebDriverWait(browserObject, 10);
+		 	System.out.println("Test Case 5 - Payment ");
+		   // 9. Click on pay with stripe button
+		 	WebElement radioButtonPayment = browserObject.findElement(By.xpath("//label[@for='payment_method_stripe']"));
+		 	radioButtonPayment.click();
+		   // 10. Click on Place Order button
+		 	browserObject.findElement(By.id("learn-press-checkout-place-order")).click();
+		   // 11. Enter the card number 
+//		 	WebElement creditcardField;
+//		 	creditcardField = waitElement2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='cardnumber']"))); 
+//
+//		 	Actions action = new Actions(browserObject);
+//			action.moveToElement(creditcardField);
+//			action.sendKeys(creditcardField, "6011111111111117");
+			
+			
+		 	WebElement creditcardField;
+		 	creditcardField = waitElement2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='cardnumber']"))); 
+		 	creditcardField.clear();
+		 	creditcardField.sendKeys("6011 1111 1111 1117");
+		  // 12. Enter the expiration date 
+		 	browserObject.findElement(By.className("//span[@class='CardField-expiry']")).sendKeys("0827");
+		  // 13. Enter the CVC
+		 	browserObject.findElement(By.xpath("//span[@class='CardField-cvc']")).sendKeys("222");
+		  // 14. Click on Pay Now button
+		 	browserObject.findElement(By.id("payment-button")).click();
+
+	 
+	 } 
+	@BeforeTest
+    public void beforeTest() {
+        System.setProperty("webdriver.chrome.driver", "/Users/judenys_hidalgo/Desktop/chromedriver");
+        browserObject  = new ChromeDriver();
+        browserObject .manage().window().maximize();
+    }
+	 @AfterTest
+	   public void afterTest() {
+		// 15. Close the browser 
+	       browserObject .close();
+	    }
+}
